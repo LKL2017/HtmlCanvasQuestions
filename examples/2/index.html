@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Question 2</title>
+    <style>
+        #scene {
+            border: 2px solid black;
+            transform-origin: left top;
+            transition: transform ease-in 0.2s;
+        }
+        .scale-half {
+            transform: scale(0.5);
+        }
+        button {
+            display: block;
+            margin-block: 4px;
+            padding: 0.5em;
+            border: none;
+            font-size: 18px;
+            cursor: pointer;
+            color: aliceblue;
+            background: darkgreen;
+        }
+        p {
+            font: 12px italic;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="scene"></canvas>
+    <button onclick="toggleSize()">Toggle Size</button>
+    <i>The canvas border is set to 2px initially and can be a comparison reference.</i>
+    <script>
+        const canvas = document.querySelector('#scene');
+        const ctx = canvas.getContext('2d');
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = '1px';
+        ctx.beginPath();
+        ctx.moveTo(0, 30);
+        ctx.lineTo(100, 30);
+        ctx.stroke();
+
+
+        let needScale = true;
+        function toggleSize() {
+          if (needScale) {
+            canvas.classList.add('scale-half');
+          } else {
+            canvas.classList.remove('scale-half');
+          }
+          needScale = !needScale;
+        }
+    </script>
+</body>
+</html>
