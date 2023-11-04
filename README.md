@@ -56,8 +56,26 @@ down the element's display size, so that the visible pixels will be 'squeezed'. 
 ```
 
 ### Q3:
-#### What are the differences between `setTimeout` and `requestAnimationFrame`?
-> TODO
+#### What are the differences between `setInterval` and `requestAnimationFrame`?
+A: They all tell browser to do something on a regular basis, `setInterval` receive two arguments and `requestAnimationFrame`
+receive only one, and there are canceled functions for both of them.
+```js
+const intervalId = setInterval(callback, delay);
+clearInterval(intervalId);
+
+const animationId = requestAnimationFrame(timestamp => {});
+cancelAnimationFrame(animationId);
+```
+Developer can specify a period to `setInterval`, and it follows the `Event Loop` principle, that means if there
+are many javascript tasks in the queue before your callback, you have to wait until the queue is empty, which mean the `delay`
+arguments don't represent the real period but a minimum interval.
+
+However, `requestAnimationFrame` is handled automatically by the browser, that means browser will execute the given callback
+function 60 times a minute, which can insure the animation be smooth. Besides, there is an argument which represents the timestamp
+pass to the callback function, and developer can calculate the processing of animation or do something control.
+
+In conclusion, `requesetAnimationFrame` is better than `setTimeInterval` when making animation.
+>TODO: requestAnimationFrame on high-resolution screen will execute faster than on other screens.
 
 ### Q4:
 #### What is `devicePixelRatio` and when to utilize it? 
