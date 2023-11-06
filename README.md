@@ -79,4 +79,23 @@ In conclusion, `requesetAnimationFrame` is better than `setTimeInterval` when ma
 
 ### Q4:
 #### What is `devicePixelRatio` and when to utilize it? 
-> TODO
+A: this property is on the global object `window`, and it represents the ratio of physical pixel to css pixel, or you can
+say the pixel 'density'. High resolution devices usually have higher `devicePixelRatio` than other devices with regular resolution.
+
+A way to resolve the fuzzy canvas on screen is as below(something similar to half pixel issue):
+```html
+<canvas id="scene"></canvas>
+```
+```js
+// you can specify more render pixels to the canvas, and give it original display size
+const canvas = document.querySelector('#scene');
+const size = 200;
+canvas.style.width = `${size}px`;
+canvas.style.height = `${size}px`;
+
+if(window.devicePixelRatio > 1) {
+    // use Math.floor casue devicePixelRatio is a double-precision floating point number
+    canvas.width = Math.floor(size * window.devicePixelRatio); 
+    canvas.height = Math.floor(size * window.devicePixelRatio); 
+}
+```
