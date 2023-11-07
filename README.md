@@ -75,7 +75,8 @@ function 60 times a minute, which can insure the animation be smooth. Besides, t
 pass to the callback function, and developer can calculate the processing of animation or do something control.
 
 In conclusion, `requesetAnimationFrame` is better than `setTimeInterval` when making animation.
->TODO: requestAnimationFrame on high-resolution screen will execute faster than on other screens.
+>TODO: `MDN` said requestAnimationFrame on high-resolution screen will execute faster than on other screens. I created a simple
+> demo but found that there was subtle difference between the time shift on different resolutions of screen.
 
 ### Q4:
 #### What is `devicePixelRatio` and when to utilize it? 

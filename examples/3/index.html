@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Question 3</title>
+</head>
+<body>
+<canvas id="scene" style="border: 1px solid #ccc"></canvas>
+<p>The small cube took <span style="color: red">-</span> ms to go from left to right.</p>
+<script>
+    const canvas = document.querySelector('#scene');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 1500;
+    ctx.fillStyle = 'aqua';
+    let x = 0;
+    const vx = 10;
+
+    function animate(timestamp) {
+        if (x >= canvas.width) {
+            document.querySelector('p>span').innerHTML = Math.floor(timestamp);
+            return;
+        }
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillRect(x, 100, 10, 10);
+        x += vx;
+        requestAnimationFrame(animate)
+    }
+    animate();
+
+</script>
+</body>
+</html>
