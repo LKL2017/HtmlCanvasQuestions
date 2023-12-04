@@ -100,3 +100,53 @@ if(window.devicePixelRatio > 1) {
     canvas.height = Math.floor(size * window.devicePixelRatio); 
 }
 ```
+
+### Q5:
+#### What is `beginPath`?
+A: `beginPath` is a function on the [ContextRenderingContext2D](https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D) 
+Object and when you want to create a new path, call it. Guess what? The timing of calling it used to make me suffer.
+See the code below:
+```javascript
+// asuming shapes is a collection of shape with different paths
+const shapes = [
+  [{x:1, y:1}, {x:2, y:2}], // shape1
+  [{x:1, y:1}, {x:4, y:4}], // shape2
+  [{x:0, y:0}, {x:2, y:2}, {x:4, y:4}], // shape3
+  // ...
+]; 
+
+// 😈 drawing path without beginPath 
+for (let shape of shapes) {
+  for (let i = 0; i < shape.length; i++) {
+    const point = shape[i];
+    if (i === 0) {
+      ctx.moveTo(point.x, point.y);
+    } else {
+      ctx.lineTo(point.x, point.y);
+    }
+  }
+}
+
+// 😌 drawing path with beginPath before every cycle
+for (let shape of shapes) {
+  for (let i = 0; i < shape.length; i++) {
+    const point = shape[i];
+    ctx.beginPath(); // 👏
+    if (i === 0) {
+      ctx.moveTo(point.x, point.y);
+    } else {
+      ctx.lineTo(point.x, point.y);
+    }
+  }
+}
+```
+According to my code experience, I missed calling `beginPath`, but the output shape is the same(in my scenario) from the appearance.
+I just found the frame rate dropped rapidly. It because when not calling beginPath, the render engine will continue drawing
+path in the for-loop, which result in a very long path. And in order to render it, there will be a huge amount of computation
+(coordinate update and others) at every animation frame, therefore frame rate dropped.
+
+In opposite, there also have a function called `closePath`, it will close your drawing path if it was not closed, and do noting
+if it was closed. For better readability, I think using `beginPath` and `closePath` as a fixed combination is not bad.
+
+
+So be careful when processing with for-loop and paying attention to what you will do at every frame.
